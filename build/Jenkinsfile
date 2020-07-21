@@ -62,8 +62,9 @@ node(POD_LABEL){
         container('builder') 
         {
             sh """
+              ./build-proj.sh
               ./build-gdal.sh
-            tar -czvf alpine-gdal.tgz /usr/local
+              tar -czvf alpine-gdal.tgz /usr/local
             """
         }
     }
@@ -71,9 +72,10 @@ node(POD_LABEL){
     stage("Publish"){
         withCredentials([usernameColonPassword(credentialsId: 'nexusCredentials', variable: 'NEXUS_CREDENTIALS')])
           {
-            sh "curl -v -u ${NEXUS_CREDENTIALS} --upload-file alpine-geos.tgz https://nexus.ossim.io/repository/ossim-dependencies/"
+            sh "curl -v -u ${NEXUS_CREDENTIALS} --upload-file alpine-gdal.tgz https://nexus.ossim.io/repository/ossim-dependencies/"
           }
     }
+    
 	stage("Clean Workspace"){
     if ("${CLEAN_WORKSPACE}" == "true")
       step([$class: 'WsCleanup'])
