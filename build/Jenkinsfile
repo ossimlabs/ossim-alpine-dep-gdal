@@ -64,7 +64,8 @@ node(POD_LABEL){
             sh """
               ./build-proj.sh
               ./build-gdal.sh
-              tar -czvf alpine-gdal.tgz /usr/local
+              cd /usr/local
+              tar -czvf alpine-gdal.tgz *
             """
         }
     }
