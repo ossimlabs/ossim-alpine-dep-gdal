@@ -47,16 +47,6 @@ node(POD_LABEL){
         }
         load "common-variables.groovy"
     }
-    stage (" Checkout gdal")
-    {
-        container('builder') 
-        {
-            sh """
-              ./checkout-proj.sh
-              ./checkout-gdal.sh
-            """
-        }
-    }
     stage (" Build gdal")
     {
         container('builder') 
